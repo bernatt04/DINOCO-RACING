@@ -1,0 +1,20 @@
+/* src/styles/critical.css */
+body {
+    background-color: #F8F9FA;
+    color: #2A2E35;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1 {
+    color: #1A3B5D;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  button {
+    background-color: #32F59A;
+    color: #000000;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+  

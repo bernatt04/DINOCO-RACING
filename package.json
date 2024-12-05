@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "minify-widget": "terser frontend/public/widget.js -o frontend/public/widget.min.js --compress --mangle",
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
+    "@next/font": "^14.2.15",
+    "font": "^0.0.4",
+    "react-color": "^2.19.3",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.1",
+    "react-syntax-highlighter": "^15.6.1",
+    "react-tooltip": "^5.28.0",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "terser": "^5.36.0"
+  }
+}
