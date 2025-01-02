@@ -102,9 +102,8 @@ const Header: React.FC = () => {
               <MobileNavLink href="/about" label="About Us" onClick={() => setIsOpen(false)} />
               <MobileNavLink href="/team" label="Team" onClick={() => setIsOpen(false)} />
               <MobileDropdown label="Services" onClick={() => setIsOpen(false)}>
-                <Link href="/services/design" className="block px-4 py-2 hover:bg-gray-200">Design</Link>
-                <Link href="/services/development" className="block px-4 py-2 hover:bg-gray-200">Development</Link>
-                <Link href="/services/marketing" className="block px-4 py-2 hover:bg-gray-200">Marketing</Link>
+                <Link href="/sponsorships" className="block px-4 py-2 hover:bg-gray-200">Sponsorships</Link>
+                
               </MobileDropdown>
               <MobileNavLink href="/contact" label="Contact" onClick={() => setIsOpen(false)} />
               <Link
