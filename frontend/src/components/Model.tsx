@@ -22,6 +22,7 @@ type GLTFResult = GLTF & {
 
 const Model = (props: JSX.IntrinsicElements['group']) => {
   const { nodes, materials } = useGLTF('/kart/scene.gltf') as GLTFResult;
+
   return (
     <group {...props} dispose={null} scale={0.02} position={[0, 0, 0]}>
       <group rotation={[-Math.PI, 0, 0]}>
@@ -36,6 +37,7 @@ const Model = (props: JSX.IntrinsicElements['group']) => {
   );
 };
 
+// Preload the GLTF so it's cached for faster loading
 useGLTF.preload('/kart/scene.gltf');
 
 export default Model;

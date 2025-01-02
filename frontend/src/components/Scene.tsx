@@ -5,13 +5,19 @@ import { Canvas } from '@react-three/fiber';
 import dynamic from 'next/dynamic';
 import * as THREE from 'three';
 import { animated, useSpring } from '@react-spring/three';
-import { FaArrowUp, FaArrowDown, FaArrowLeft, FaArrowRight, FaSyncAlt } from 'react-icons/fa';
+import {
+  FaArrowUp,
+  FaArrowDown,
+  FaArrowLeft,
+  FaArrowRight,
+  FaSyncAlt,
+} from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
-import TypewriterText from './TypewriterText'; // Ensure the path is correct
+import TypewriterText from './TypewriterText'; // Ensure this path is correct
 
 // Dynamically import the Model component with SSR disabled
-const Model = dynamic(() => import('../components/Model'), { ssr: false });
+const Model = dynamic(() => import('./Model'), { ssr: false });
 
 // Define allowed position types
 type PositionType = 'left' | 'right' | 'front' | 'back';
@@ -42,7 +48,11 @@ const StyledInfoOverlay = styled(motion.div)<{ position: PositionType }>`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible, position, content }) => {
+const InfoOverlay: React.FC<InfoOverlayProps> = ({
+  visible,
+  position,
+  content,
+}) => {
   return (
     <AnimatePresence>
       {visible && (
@@ -94,7 +104,6 @@ const RotatableModel: React.FC<RotatableModelProps> = ({ targetRotation }) => {
 
 /**
  * Styled Component for the Model Container with Circular Gradient
- * Adjusted to be shorter vertically and wider horizontally
  */
 const ModelContainer = styled.div`
   position: relative;
@@ -102,15 +111,18 @@ const ModelContainer = styled.div`
   border-radius: 2rem; /* Equivalent to rounded-3xl */
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
   width: 100%;
-  height: 80%; /* Reduced height to make it shorter vertically */
-  max-width: 40rem; /* Increased max-width to make it wider horizontally */
+  max-width: 40rem; /* Make it reasonably wide for desktops */
   padding: 1.5rem; /* Equivalent to p-6 */
   display: flex;
   flex-direction: column;
   align-items: center;
-  
-  /* Added thick black outline */
   outline: 5px solid black; /* Thick black outline */
+
+  /* By default (on mobile), let the height adapt to content.
+     On medium screens and above, enforce a more controlled height. */
+  @media (min-width: 768px) {
+    height: 80%;
+  }
 `;
 
 /**
@@ -118,10 +130,13 @@ const ModelContainer = styled.div`
  */
 const ControllerBar = styled.div`
   position: absolute;
+  /* Center the controls horizontally */
+  left: 50%;
   bottom: 1.5rem; /* Equivalent to bottom-6 */
+  transform: translateX(-50%);
   display: flex;
   gap: 1rem; /* Equivalent to space-x-4 */
-  background-color: rgba(211, 211, 211, 0.8); /* Light gray with some transparency */
+  background-color: rgba(211, 211, 211, 0.8); /* Light gray w/ transparency */
   padding: 0.75rem 1.5rem;
   border-radius: 9999px; /* Fully rounded */
   backdrop-filter: blur(5px);
@@ -129,10 +144,14 @@ const ControllerBar = styled.div`
 
 const Scene: React.FC = () => {
   // Define target rotations for different views
-  const [targetRotation, setTargetRotation] = useState<THREE.Euler>(new THREE.Euler(0, 0, 0));
+  const [targetRotation, setTargetRotation] = useState<THREE.Euler>(
+    new THREE.Euler(0, 0, 0)
+  );
 
-  // State to keep current rotation to show information
-  const [currentRotation, setCurrentRotation] = useState<THREE.Euler>(new THREE.Euler(0, 0, 0));
+  // State to keep track of the current rotation for info display
+  const [currentRotation, setCurrentRotation] = useState<THREE.Euler>(
+    new THREE.Euler(0, 0, 0)
+  );
 
   // Update currentRotation when targetRotation changes
   useEffect(() => {
@@ -141,19 +160,27 @@ const Scene: React.FC = () => {
 
   // Handler functions for rotation controls with 90 degrees (π/2 radians)
   const rotateLeft = () => {
-    setTargetRotation((prev) => new THREE.Euler(prev.x, prev.y + Math.PI / 2, prev.z));
+    setTargetRotation(
+      (prev) => new THREE.Euler(prev.x, prev.y + Math.PI / 2, prev.z)
+    );
   };
 
   const rotateRight = () => {
-    setTargetRotation((prev) => new THREE.Euler(prev.x, prev.y - Math.PI / 2, prev.z));
+    setTargetRotation(
+      (prev) => new THREE.Euler(prev.x, prev.y - Math.PI / 2, prev.z)
+    );
   };
 
   const rotateUp = () => {
-    setTargetRotation((prev) => new THREE.Euler(prev.x + Math.PI / 2, prev.y, prev.z));
+    setTargetRotation(
+      (prev) => new THREE.Euler(prev.x + Math.PI / 2, prev.y, prev.z)
+    );
   };
 
   const rotateDown = () => {
-    setTargetRotation((prev) => new THREE.Euler(prev.x - Math.PI / 2, prev.y, prev.z));
+    setTargetRotation(
+      (prev) => new THREE.Euler(prev.x - Math.PI / 2, prev.y, prev.z)
+    );
   };
 
   const resetRotation = () => {
@@ -166,13 +193,41 @@ const Scene: React.FC = () => {
     const tolerance = Math.PI / 8; // 22.5 degrees
 
     if (yRotation > -tolerance && yRotation < tolerance) {
-      return { visible: true, position: 'front', content: 'Front View: Check out the sleek headlights and grille.' };
-    } else if (yRotation > Math.PI / 2 - tolerance && yRotation < Math.PI / 2 + tolerance) {
-      return { visible: true, position: 'right', content: 'Right Side: Observe the advanced tire design and side mirrors.' };
-    } else if (yRotation > -Math.PI / 2 - tolerance && yRotation < -Math.PI / 2 + tolerance) {
-      return { visible: true, position: 'left', content: 'Left Side: Explore the durable tires and elegant side panels.' };
-    } else if (yRotation > Math.PI - tolerance || yRotation < -Math.PI + tolerance) {
-      return { visible: true, position: 'back', content: 'Back View: Discover the powerful exhaust system and trunk space.' };
+      return {
+        visible: true,
+        position: 'front',
+        content: 'Front View: Check out the sleek headlights and grille.',
+      };
+    } else if (
+      yRotation > Math.PI / 2 - tolerance &&
+      yRotation < Math.PI / 2 + tolerance
+    ) {
+      return {
+        visible: true,
+        position: 'right',
+        content:
+          'Right Side: Observe the advanced tire design and side mirrors.',
+      };
+    } else if (
+      yRotation > -Math.PI / 2 - tolerance &&
+      yRotation < -Math.PI / 2 + tolerance
+    ) {
+      return {
+        visible: true,
+        position: 'left',
+        content:
+          'Left Side: Explore the durable tires and elegant side panels.',
+      };
+    } else if (
+      yRotation > Math.PI - tolerance ||
+      yRotation < -Math.PI + tolerance
+    ) {
+      return {
+        visible: true,
+        position: 'back',
+        content:
+          'Back View: Discover the powerful exhaust system and trunk space.',
+      };
     } else {
       return { visible: false, position: 'front', content: '' };
     }
@@ -194,13 +249,13 @@ const Scene: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen bg-[#01437d]">
+    <div className="flex flex-col md:flex-row w-full min-h-screen bg-[#01437d]">
       {/* Left Side: 3D Model and Controls */}
-      <div className="md:w-1/2 flex items-center justify-center p-4">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4">
         <ModelContainer>
-          {/* Canvas for the 3D model */}
+          {/* 3D Model Canvas */}
           <Canvas
-            className="w-full h-full" /* Ensures Canvas fills the ModelContainer */
+            className="w-full h-[50vh] md:h-full" /* Make Canvas responsive */
             camera={{ position: [0, 2, 5], fov: 60 }}
             gl={{ alpha: true, antialias: true }}
           >
@@ -264,10 +319,16 @@ const Scene: React.FC = () => {
       </div>
 
       {/* Right Side: Information */}
-      <div className="md:w-1/2 flex items-center justify-center p-4">
-        <div className="bg-blue-100 rounded-3xl shadow-2xl w-full h-5/6 max-w-xl p-6 flex items-center justify-center">
-          {/* Information with Typewriter Effect */}
-          <TypewriterText text={info.visible ? info.content : 'Use the arrows to rotate the car and discover different views!'} />
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 h-auto">
+        <div className="bg-blue-100 rounded-3xl shadow-2xl w-full h-auto max-w-xl p-6 flex items-center justify-center">
+          {/* Typewriter Text for Info */}
+          <TypewriterText
+            text={
+              info.visible
+                ? info.content
+                : 'Use the arrows to rotate the car and discover different views!'
+            }
+          />
         </div>
       </div>
     </div>
