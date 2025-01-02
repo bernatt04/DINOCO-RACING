@@ -1,0 +1,117 @@
+/* components/Scene.module.css */
+
+.sceneContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+  
+  .canvas {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .buttonContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Permite interactuar solo con los botones */
+  }
+  
+  .menuButton {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+    transition: transform 0.3s, background 0.3s;
+    color: #fff;
+    font-size: 12px;
+  }
+  
+  .icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+  }
+  
+  .menuButton span {
+    font-size: 12px;
+    color: #fff;
+  }
+  
+  .menuButton:hover {
+    transform: scale(1.2);
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+  }
+  
+  /* Posicionamiento Circular de los Botones */
+  .front {
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .back {
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+  
+  .left {
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .right {
+    top: 50%;
+    right: 10%;
+    transform: translate(50%, -50%);
+  }
+  
+  .wheels {
+    top: 25%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .engine {
+    top: 75%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .chassis {
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Estilos Adicionales para Mejorar la Apariencia */
+  .menuButton {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  .menuButton img {
+    pointer-events: none; /* Evita que los eventos de mouse afecten a la imagen */
+  }
+  
+  .menuButton span {
+    pointer-events: none; /* Evita que los eventos de mouse afecten al texto */
+  }
+  

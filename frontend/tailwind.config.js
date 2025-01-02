@@ -6,27 +6,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#FFC107', // Amarillo principal
-          light: '#FFD54F', // Amarillo claro
-          dark: '#FFA000', // Amarillo oscuro
+        primary: '#00BFFF', // Azul Claro similar al de Dinoco
+        secondary: '#FFA500', // Naranja
+        accent: '#FFFFFF', // Blanco
+      },
+      keyframes: {
+        neon: {
+          '0%, 100%': { textShadow: '0 0 5px #00BFFF, 0 0 10px #00BFFF, 0 0 20px #FFA500, 0 0 30px #FFA500' },
+          '50%': { textShadow: '0 0 10px #00BFFF, 0 0 20px #00BFFF, 0 0 30px #FFA500, 0 0 40px #FFA500' },
         },
-        background: {
-          DEFAULT: '#F9FAFB', // Blanco suave para el fondo principal
-          dark: '#212121', // Negro puro para contrastes
-        },
-        text: {
-          DEFAULT: '#333333', // Gris oscuro para texto principal
-          light: '#666666', // Gris medio para subtítulos
-          dark: '#FFFFFF', // Blanco para texto en fondos oscuros
-        },
-        border: {
-          DEFAULT: '#E0E0E0', // Gris claro para bordes
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
         },
       },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'], // Fuente moderna y profesional
-        serif: ['Merriweather', 'serif'], // Fuente decorativa para títulos
+      animation: {
+        neon: 'neon 1.5s ease-in-out infinite',
+        gradient: 'gradient 15s ease infinite',
+      },
+      backgroundImage: {
+        'gradient-rainbow': 'linear-gradient(270deg, #00BFFF, #FFA500, #00BFFF)',
       },
     },
   },

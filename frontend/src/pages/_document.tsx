@@ -6,9 +6,7 @@ class MyDocument extends Document {
       <Html lang="es">
         <Head>
           {/* Meta Tags importantes */}
-          <meta charSet="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="description" content="BERNARDOS & CO - IA personalizable para servicios al cliente." />
+          
 
           {/* Fuente principal */}
           <link

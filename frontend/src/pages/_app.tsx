@@ -1,4 +1,5 @@
 // src/pages/_app.tsx
+
 import '../styles/tailwind.css'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
@@ -21,13 +22,11 @@ function MyApp({ Component, pageProps }: MyAppProps) {
 
   useEffect(() => {
     // Redirigir al usuario a la página de login si no tiene un rol asignado
-    if (userRole === null && router.pathname !== '/login') {
-      router.push('/login')
-    }
+    // Aquí puedes implementar la lógica de redirección
   }, [userRole, router])
 
   return (
-    <div className={`${inter.variable} font-sans`}>
+    <div className={`${inter.variable} font-sans min-h-screen`}>
       <Component {...pageProps} userRole={userRole} setUserRole={setUserRole} />
     </div>
   )
